@@ -1,9 +1,8 @@
-import React from 'react';
 import { GoSignOut } from 'react-icons/go';
 import { FiLogIn, FiShoppingCart, FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import { useAppDispatch } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { removeUser } from '../../../store/user/user.slice';
 import { getAuth, signOut } from 'firebase/auth';
 import app from '../../../firebase';
@@ -14,6 +13,7 @@ function Nav() {
   const { isAuth } = useAuth();
   const dispatch = useAppDispatch();
   const auth = getAuth(app);
+  const { products } = useAppSelector((state) => state.cart);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -31,7 +31,14 @@ function Nav() {
       <ul>
         <li>
           <div className={styles.counter}>
-            <FiShoppingCart />
+            <Link to={'/cart'}>
+              {' '}
+              <FiShoppingCart title='장바구니'/>
+            </Link>
+            {products.length > 0 && <b>{products.length}</b>}
+            {products.length > 0 && (
+              <div className={styles.nav_hover_cart}></div>
+            )}
           </div>
         </li>
         <li>

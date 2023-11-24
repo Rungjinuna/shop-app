@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IProduct } from '../products/product.type';
 
+//
 export const postOrder = createAsyncThunk(
   'cart/postOrder',
   async (order: CartState, thunkAPI) => {
